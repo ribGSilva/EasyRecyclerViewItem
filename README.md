@@ -1,6 +1,8 @@
-# ItemRecyclerViewExpansivel
+# EasyItemRecyclerView
 
-Item of RecyclerView expansible.
+Here, there are two adapter types, an item of RecyclerView expansible, and a simple item:
+
+Here is what I did to use the expansible adapter:
 
 Ex:
 
@@ -118,4 +120,32 @@ JAVA:
         true // set if the dynamic layout will start visible or not
         ));
 
+To use the Simple, just change the JAVA code to something like this:
 
+        BindSimpleViewHolderHandler bindSimpleViewHolderHandler = new BindSimpleViewHolderHandler() {
+            
+            @Override
+            public void bindViewHolderHandler(SimpleItemRecyclerViewAdapter.SimpleItemRecyclerViewViewHolder holder, Object object, int position) {
+                //cast your item
+                TestClass item = (TestClass) object;
+
+                //get the layout root
+                View root = holder.getRootLayout();
+
+                //then fill with your class and layout
+
+                TextView title = root.findViewById(R.id.main);
+                title.setText(item.getTitle());
+
+
+                TextView body = root.findViewById(R.id.body);
+                body.setText(item.getBody());
+            }
+        };
+
+        recyclerView.setAdapter(SimpleItemRecyclerViewAdapter.newInstance(
+                this, //context
+                listItems, //list of items
+                R.layout.fixed_layout, // layout
+                bindSimpleViewHolderHandler // handler that will fill the view items
+        ));
